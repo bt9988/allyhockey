@@ -137,7 +137,6 @@
       font-size: 0.7rem;
       padding: 0.25rem 0.4rem;
       border-radius: 999px;
-      background: var(--pink);
       color: black;
       font-weight: 600;
     }
@@ -236,41 +235,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Example Player</td>
-        <td>Example Team</td>
-        <td>2022–23</td>
-        <td>Pride tape</td>
-        <td><a class="button" href="#">Buy jersey</a></td>
-      </tr>
+      <!-- Dynamic rows from sheet -->
     </tbody>
   </table>
 
   <!-- Mobile Cards -->
   <div class="cards">
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Example Player</div>
-          <div class="card-sub">Example Team · 2022–23</div>
-        </div>
-        <div class="expand" onclick="toggleDetails(this)">+</div>
-      </div>
-
-      <div class="badges">
-        <div class="badge">Pride tape</div>
-      </div>
-
-      <div class="actions">
-        <a class="button" href="#">Buy jersey</a>
-      </div>
-
-      <div class="details">
-        <div><strong>Source:</strong> Team Instagram</div>
-        <div><strong>Verified:</strong> March 2023</div>
-        <img src="https://via.placeholder.com/400x250" alt="">
-      </div>
-    </div>
+    <!-- Dynamic cards from sheet -->
   </div>
 
   <footer>
@@ -281,9 +252,9 @@
 </main>
 
 <script>
-  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiYFhrVaw_hJPY74tlc-Cr4K36CJjL_ROLWYvpuhgHGHdZu-6QVYNc3d2TFl4WrJoZlT21RDek-7Xp/pub?gid=0&single=true&output=csv";
+  const SHEET_CSV_URL = "PASTE_YOUR_PUBLISHED_CSV_LINK_HERE";
 
-  // Utility: CSV → Array of Objects
+  // CSV → Array of Objects
   async function fetchSheet() {
     const res = await fetch(SHEET_CSV_URL);
     const text = await res.text();
@@ -336,13 +307,22 @@
 
   function createTableRow(player) {
     const tr = document.createElement('tr');
+
+    // Create badges cell
+    const badgesCell = document.createElement('td');
+    player.support_type.split('|').forEach(type => {
+      badgesCell.appendChild(createBadge(type.trim()));
+    });
+
     tr.innerHTML = `
       <td>${player.player_name}</td>
       <td>${player.team}</td>
       <td>${player.season}</td>
-      <td>${player.support_type}</td>
+      <td></td>
       <td><a class="button" href="${player.fanatics_url}" target="_blank">Buy jersey</a></td>
     `;
+
+    tr.children[3].replaceWith(badgesCell); // Replace empty cell with badges
     return tr;
   }
 
@@ -359,9 +339,15 @@
     });
   }
 
+  function toggleDetails(el) {
+    const details = el.closest('.card').querySelector('.details');
+    const open = details.style.display === 'block';
+    details.style.display = open ? 'none' : 'block';
+    el.textContent = open ? '+' : '–';
+  }
+
   renderPlayers();
 </script>
-
 
 </body>
 </html>

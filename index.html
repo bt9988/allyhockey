@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ally Hockey</title>
 
-  <!-- SEO -->
   <meta name="description" content="A verified, source-backed list of NHL players who have publicly shown support for Pride and LGBTQ+ inclusion." />
 
   <style>
@@ -23,9 +22,7 @@
       --border: #2a3060;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -39,21 +36,9 @@
       text-align: center;
     }
 
-    header h1 {
-      font-size: 2.5rem;
-      margin: 0;
-    }
-
-    header p {
-      max-width: 700px;
-      margin: 0.75rem auto;
-      color: #f0f0ff;
-    }
-
-    .disclaimer {
-      font-size: 0.85rem;
-      opacity: 0.85;
-    }
+    header h1 { font-size: 2.5rem; margin: 0; }
+    header p { max-width: 700px; margin: 0.75rem auto; color: #f0f0ff; }
+    .disclaimer { font-size: 0.85rem; opacity: 0.85; }
 
     main {
       background: var(--bg);
@@ -62,7 +47,6 @@
       margin-top: 1.5rem;
     }
 
-    /* Filters */
     .filters {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -77,7 +61,6 @@
       font-size: 0.9rem;
     }
 
-    /* Table (desktop) */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -97,11 +80,7 @@
       color: var(--muted);
     }
 
-    /* Cards (mobile) */
-    .cards {
-      display: grid;
-      gap: 0.75rem;
-    }
+    .cards { display: grid; gap: 0.75rem; }
 
     .card {
       background: var(--card);
@@ -110,88 +89,26 @@
       border: 1px solid var(--border);
     }
 
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-    }
+    .card-header { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+    .card-title { font-weight: 600; }
+    .card-sub { font-size: 0.8rem; color: var(--muted); }
 
-    .card-title {
-      font-weight: 600;
-    }
+    .badges { display: flex; flex-wrap: wrap; gap: 0.25rem; margin: 0.5rem 0; }
+    .badge { font-size: 0.7rem; padding: 0.25rem 0.4rem; border-radius: 999px; color: black; font-weight: 600; }
 
-    .card-sub {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    .expand { cursor: pointer; font-size: 1.25rem; line-height: 1; user-select: none; }
 
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.25rem;
-      margin: 0.5rem 0;
-    }
+    .details { display: none; margin-top: 0.5rem; font-size: 0.85rem; }
+    .details img { width: 100%; max-width: 200px; margin-top: 0.5rem; border-radius: 8px; }
 
-    .badge {
-      font-size: 0.7rem;
-      padding: 0.25rem 0.4rem;
-      border-radius: 999px;
-      color: black;
-      font-weight: 600;
-    }
+    .actions { margin-top: 0.5rem; }
+    .button { display: inline-block; padding: 0.5rem 0.75rem; background: var(--yellow); color: black; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.8rem; }
 
-    .expand {
-      cursor: pointer;
-      font-size: 1.25rem;
-      line-height: 1;
-    }
+    footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); text-align: center; }
 
-    .details {
-      display: none;
-      margin-top: 0.5rem;
-      font-size: 0.85rem;
-    }
-
-    .details img {
-      width: 100%;
-      max-width: 200px;
-      margin-top: 0.5rem;
-      border-radius: 8px;
-    }
-
-    .actions {
-      margin-top: 0.5rem;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 0.5rem 0.75rem;
-      background: var(--yellow);
-      color: black;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.8rem;
-    }
-
-    footer {
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    /* Desktop breakpoint */
     @media (min-width: 768px) {
-      table {
-        display: table;
-      }
-      .cards {
-        display: none;
-      }
+      table { display: table; }
+      .cards { display: none; }
     }
   </style>
 </head>
@@ -205,25 +122,13 @@
 </header>
 
 <main>
-
-  <!-- Filters -->
   <div class="filters">
     <input type="text" placeholder="Search player…" />
-    <select>
-      <option>All teams</option>
-      <option>Vancouver Canucks</option>
-    </select>
-    <select>
-      <option>All seasons</option>
-      <option>2022–23</option>
-    </select>
-    <select>
-      <option>All support types</option>
-      <option>Pride tape</option>
-    </select>
+    <select><option>All teams</option><option>Vancouver Canucks</option></select>
+    <select><option>All seasons</option><option>2022–23</option></select>
+    <select><option>All support types</option><option>Pride tape</option></select>
   </div>
 
-  <!-- Desktop Table -->
   <table>
     <thead>
       <tr>
@@ -234,119 +139,112 @@
         <th>Links</th>
       </tr>
     </thead>
-    <tbody>
-      <!-- Dynamic rows from sheet -->
-    </tbody>
+    <tbody></tbody>
   </table>
 
-  <!-- Mobile Cards -->
-  <div class="cards">
-    <!-- Dynamic cards from sheet -->
-  </div>
+  <div class="cards"></div>
 
   <footer>
     Inclusion is based solely on verifiable public sources.<br>
     Some links may earn a commission at no additional cost.
   </footer>
-
 </main>
 
 <script>
-  const SHEET_CSV_URL = "PASTE_YOUR_PUBLISHED_CSV_LINK_HERE";
+const SHEET_CSV_URL = "PASTE_YOUR_PUBLISHED_CSV_LINK_HERE";
 
-  // CSV → Array of Objects
-  async function fetchSheet() {
-    const res = await fetch(SHEET_CSV_URL);
-    const text = await res.text();
-    const rows = text.trim().split('\n');
-    const headers = rows.shift().split(',');
-    return rows.map(row => {
-      const cols = row.split(',');
-      const obj = {};
-      headers.forEach((h,i) => obj[h] = cols[i]);
-      return obj;
-    });
-  }
+// CSV → Array of Objects
+async function fetchSheet() {
+  const res = await fetch(SHEET_CSV_URL);
+  const text = await res.text();
+  const rows = text.trim().split('\n');
+  const headers = rows.shift().split(',');
+  return rows.map(row => {
+    const cols = row.split(',');
+    const obj = {};
+    headers.forEach((h,i) => obj[h] = cols[i]);
+    return obj;
+  });
+}
 
-  function createBadge(type) {
-    const colors = ['#ff4fa3','#ff914d','#ffd84d','#4dd599','#4d8dff','#9b4dff'];
-    const color = colors[Math.floor(Math.random()*colors.length)];
-    const badge = document.createElement('div');
-    badge.className = 'badge';
-    badge.style.background = color;
-    badge.textContent = type;
-    return badge;
-  }
+function createBadge(type) {
+  const colors = ['#ff4fa3','#ff914d','#ffd84d','#4dd599','#4d8dff','#9b4dff'];
+  const color = colors[Math.floor(Math.random()*colors.length)];
+  const badge = document.createElement('div');
+  badge.className = 'badge';
+  badge.style.background = color;
+  badge.textContent = type;
+  return badge;
+}
 
-  function createCard(player) {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div class="card-header">
-        <div>
-          <div class="card-title">${player.player_name}</div>
-          <div class="card-sub">${player.team} · ${player.season}</div>
-        </div>
-        <div class="expand" onclick="toggleDetails(this)">+</div>
+function createCard(player) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-header">
+      <div>
+        <div class="card-title">${player.player_name}</div>
+        <div class="card-sub">${player.team} · ${player.season}</div>
       </div>
-      <div class="badges"></div>
-      <div class="actions">
-        <a class="button" href="${player.fanatics_url}" target="_blank">Buy jersey</a>
-      </div>
-      <div class="details">
-        <div><strong>Source:</strong> <a href="${player.source_url}" target="_blank">${player.source_type}</a></div>
-        <div><strong>Verified:</strong> ${player.verified_date}</div>
-        ${player.photo_url ? `<img src="${player.photo_url}" alt="">` : ''}
-        <div>${player.support_details || ''}</div>
-      </div>
-    `;
-    const badgesContainer = card.querySelector('.badges');
-    player.support_type.split('|').forEach(type => badgesContainer.appendChild(createBadge(type.trim())));
-    return card;
-  }
+      <div class="expand">+</div>
+    </div>
+    <div class="badges"></div>
+    <div class="actions">
+      <a class="button" href="${player.fanatics_url}" target="_blank">Buy jersey</a>
+    </div>
+    <div class="details">
+      <div><strong>Source:</strong> <a href="${player.source_url}" target="_blank">${player.source_type}</a></div>
+      <div><strong>Verified:</strong> ${player.verified_date}</div>
+      ${player.photo_url ? `<img src="${player.photo_url}" alt="">` : ''}
+      <div>${player.support_details || ''}</div>
+    </div>
+  `;
 
-  function createTableRow(player) {
-    const tr = document.createElement('tr');
+  const badgesContainer = card.querySelector('.badges');
+  player.support_type.split('|').forEach(type => badgesContainer.appendChild(createBadge(type.trim())));
 
-    // Create badges cell
-    const badgesCell = document.createElement('td');
-    player.support_type.split('|').forEach(type => {
-      badgesCell.appendChild(createBadge(type.trim()));
-    });
+  // Attach toggle behavior
+  card.querySelector('.expand').addEventListener('click', () => {
+    const details = card.querySelector('.details');
+    const isOpen = details.style.display === 'block';
+    details.style.display = isOpen ? 'none' : 'block';
+    card.querySelector('.expand').textContent = isOpen ? '+' : '–';
+  });
 
-    tr.innerHTML = `
-      <td>${player.player_name}</td>
-      <td>${player.team}</td>
-      <td>${player.season}</td>
-      <td></td>
-      <td><a class="button" href="${player.fanatics_url}" target="_blank">Buy jersey</a></td>
-    `;
+  return card;
+}
 
-    tr.children[3].replaceWith(badgesCell); // Replace empty cell with badges
-    return tr;
-  }
+function createTableRow(player) {
+  const tr = document.createElement('tr');
+  const badgesCell = document.createElement('td');
+  player.support_type.split('|').forEach(type => badgesCell.appendChild(createBadge(type.trim())));
 
-  async function renderPlayers() {
-    const data = await fetchSheet();
-    const tableBody = document.querySelector('table tbody');
-    const cardsContainer = document.querySelector('.cards');
-    tableBody.innerHTML = '';
-    cardsContainer.innerHTML = '';
+  tr.innerHTML = `
+    <td>${player.player_name}</td>
+    <td>${player.team}</td>
+    <td>${player.season}</td>
+    <td></td>
+    <td><a class="button" href="${player.fanatics_url}" target="_blank">Buy jersey</a></td>
+  `;
 
-    data.forEach(player => {
-      tableBody.appendChild(createTableRow(player));
-      cardsContainer.appendChild(createCard(player));
-    });
-  }
+  tr.children[3].replaceWith(badgesCell);
+  return tr;
+}
 
-  function toggleDetails(el) {
-    const details = el.closest('.card').querySelector('.details');
-    const open = details.style.display === 'block';
-    details.style.display = open ? 'none' : 'block';
-    el.textContent = open ? '+' : '–';
-  }
+async function renderPlayers() {
+  const data = await fetchSheet();
+  const tableBody = document.querySelector('table tbody');
+  const cardsContainer = document.querySelector('.cards');
+  tableBody.innerHTML = '';
+  cardsContainer.innerHTML = '';
 
-  renderPlayers();
+  data.forEach(player => {
+    tableBody.appendChild(createTableRow(player));
+    cardsContainer.appendChild(createCard(player));
+  });
+}
+
+renderPlayers();
 </script>
 
 </body>

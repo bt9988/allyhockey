@@ -1,197 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ally Hockey</title>
-<meta name="description" content="A verified list of NHL players who have publicly shown support for Pride and LGBTQ+ inclusion." />
 
 <style>
-:root {
-  --pink:#ff4fa3; --orange:#ff914d; --yellow:#ffd84d;
-  --green:#4dd599; --blue:#4d8dff; --purple:#9b4dff;
-  --bg:#0f1220; --card:#1a1f3c; --text:#fff;
-  --muted:#b5b8ff; --border:#2a3060;
+:root{
+  --pink:#ff4fa3;--orange:#ff914d;--yellow:#ffd84d;
+  --green:#4dd599;--blue:#4d8dff;--purple:#9b4dff;
+  --bg:#0f1220;--card:#1a1f3c;--text:#fff;
+  --muted:#b5b8ff;--border:#2a3060;
 }
-
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  font-family:system-ui,sans-serif;
   background:linear-gradient(135deg,var(--purple),var(--blue),var(--green));
   color:var(--text);
 }
-
-header{
-  padding:2rem 1rem 1rem;
-  text-align:center;
-}
-header h1{margin:0;font-size:2.5rem}
-header p{max-width:720px;margin:0.75rem auto;color:#f0f0ff}
-.disclaimer{font-size:.85rem;opacity:.85}
-
-main{
-  background:var(--bg);
-  border-radius:24px 24px 0 0;
-  padding:1.5rem;
-  margin-top:1.5rem;
-}
-
-.filters{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:.75rem;
-  margin-bottom:1rem;
-}
-
-input,select{
-  padding:.55rem;
-  border-radius:8px;
-  border:none;
-  font-size:.9rem;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  display:none;
-}
-th,td{
-  padding:.75rem;
-  border-bottom:1px solid var(--border);
-  vertical-align:top;
-}
-th{
-  font-size:.8rem;
-  text-transform:uppercase;
-  color:var(--muted);
-}
-
+header{text-align:center;padding:2rem 1rem 1rem}
+main{background:var(--bg);border-radius:24px 24px 0 0;padding:1.5rem;margin-top:1rem}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem}
+input,select{padding:.5rem;border-radius:8px;border:none}
+table{width:100%;border-collapse:collapse;display:none}
+th,td{padding:.75rem;border-bottom:1px solid var(--border)}
 .cards{display:grid;gap:.75rem}
-.card{
-  background:var(--card);
-  border-radius:14px;
-  padding:.75rem;
-  border:1px solid var(--border);
-}
-
-.card-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:.5rem;
-}
-
-.card-title{font-weight:600}
+.card{background:var(--card);border-radius:14px;padding:.75rem;border:1px solid var(--border)}
+.card-header{display:flex;justify-content:space-between;align-items:center}
 .card-sub{font-size:.8rem;color:var(--muted)}
-
-.badges{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.25rem;
-  margin:.5rem 0;
-}
-
-.badge{
-  font-size:.7rem;
-  padding:.25rem .45rem;
-  border-radius:999px;
-  color:#000;
-  font-weight:600;
-}
-
-.expand{
-  cursor:pointer;
-  font-size:1.25rem;
-  user-select:none;
-}
-
-.details{
-  display:none;
-  margin-top:.5rem;
-  font-size:.85rem;
-}
-.details img{
-  width:100%;
-  max-width:220px;
-  margin-top:.5rem;
-  border-radius:8px;
-}
-
-.actions{margin-top:.5rem}
-
-.button{
-  display:inline-block;
-  padding:.5rem .75rem;
-  background:var(--yellow);
-  color:#000;
-  text-decoration:none;
-  border-radius:8px;
-  font-weight:600;
-  font-size:.8rem;
-}
-
-footer{
-  margin-top:2rem;
-  padding-top:1rem;
-  border-top:1px solid var(--border);
-  font-size:.75rem;
-  color:var(--muted);
-  text-align:center;
-}
-
-@media (min-width:768px){
-  table{display:table}
-  .cards{display:none}
-}
+.badges{display:flex;flex-wrap:wrap;gap:.25rem;margin:.5rem 0}
+.badge{font-size:.7rem;padding:.25rem .45rem;border-radius:999px;font-weight:600;color:#000}
+.expand{cursor:pointer;font-size:1.2rem}
+.details{display:none;font-size:.85rem;margin-top:.5rem}
+.button{background:var(--yellow);padding:.45rem .7rem;border-radius:8px;color:#000;text-decoration:none;font-size:.8rem;font-weight:600}
+@media(min-width:768px){table{display:table}.cards{display:none}}
 </style>
 </head>
 
 <body>
+
 <header>
   <h1>Ally Hockey</h1>
-  <p>A verified, source-backed list of NHL players who have publicly shown support for Pride and LGBTQ+ inclusion.</p>
-  <p class="disclaimer">Based only on documented public actions. No speculation.</p>
+  <p>A verified list of NHL players who have publicly supported Pride.</p>
 </header>
 
 <main>
 
 <div class="filters">
-  <input id="filter-name" placeholder="Search player…" />
+  <input id="filter-name" placeholder="Search player">
   <select id="filter-team"><option>All teams</option></select>
   <select id="filter-season"><option>All seasons</option></select>
   <select id="filter-support"><option>All support types</option></select>
 </div>
 
 <table>
-  <thead>
-    <tr>
-      <th>Player</th>
-      <th>Team</th>
-      <th>Season</th>
-      <th>Support</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody></tbody>
+<thead>
+<tr><th>Player</th><th>Team</th><th>Season</th><th>Support</th><th></th></tr>
+</thead>
+<tbody></tbody>
 </table>
 
 <div class="cards"></div>
 
-<footer>
-  Some links may earn a commission at no extra cost.
-</footer>
-
 </main>
 
 <script>
-const SHEET_CSV_URL =
+const CSV_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiYFhrVaw_hJPY74tlc-Cr4K36CJjL_ROLWYvpuhgHGHdZu-6QVYNc3d2TFl4WrJoZlT21RDek-7Xp/pub?gid=0&single=true&output=csv";
 
 const COLORS=["#ff4fa3","#ff914d","#ffd84d","#4dd599","#4d8dff","#9b4dff"];
 
+const filterName=document.getElementById("filter-name");
+const filterTeam=document.getElementById("filter-team");
+const filterSeason=document.getElementById("filter-season");
+const filterSupport=document.getElementById("filter-support");
+const tableBody=document.querySelector("tbody");
+const cards=document.querySelector(".cards");
+
 let data=[];
-let teams=new Set(), seasons=new Set(), supports=new Set();
 
 function badge(text){
   const b=document.createElement("span");
@@ -201,24 +88,20 @@ function badge(text){
   return b;
 }
 
-// Robust CSV parsing (handles commas inside quotes)
 function parseCSV(text){
-  const rows=[];
-  let cur=[], field="", inQuotes=false;
-  for(let c of text){
-    if(c==='\"') inQuotes=!inQuotes;
-    else if(c===',' && !inQuotes){ cur.push(field); field=""; }
-    else if(c==='\n' && !inQuotes){ cur.push(field); rows.push(cur); cur=[]; field=""; }
-    else field+=c;
+  const rows=[], re=/(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|([^\",]+)|)(?:,|\r?\n)/g;
+  let m,row=[];
+  while((m=re.exec(text))){
+    row.push(m[1]?.replace(/\"\"/g,'"')||m[2]||"");
+    if(m[0].endsWith("\n")){rows.push(row);row=[];}
   }
-  cur.push(field); rows.push(cur);
   return rows;
 }
 
 async function load(){
-  const res=await fetch(SHEET_CSV_URL);
-  const txt=await res.text();
-  const rows=parseCSV(txt.trim());
+  const res=await fetch(CSV_URL);
+  const text=await res.text();
+  const rows=parseCSV(text);
   const headers=rows.shift();
 
   data=rows.map(r=>{
@@ -227,89 +110,23 @@ async function load(){
     return o;
   });
 
-  data.forEach(p=>{
-    if(p.team) teams.add(p.team);
-    if(p.season) seasons.add(p.season);
-    p.support_type.split("|").map(s=>s.trim()).forEach(s=>supports.add(s));
-  });
-
-  fillFilters();
+  populateFilters();
   render();
 }
 
-function fillFilters(){
-  teams.forEach(t=>filterTeam.append(new Option(t,t)));
-  seasons.forEach(s=>filterSeason.append(new Option(s,s)));
-  supports.forEach(s=>filterSupport.append(new Option(s,s)));
+function populateFilters(){
+  [...new Set(data.map(p=>p.team))].forEach(t=>t&&filterTeam.add(new Option(t,t)));
+  [...new Set(data.map(p=>p.season))].forEach(s=>s&&filterSeason.add(new Option(s,s)));
+  [...new Set(data.flatMap(p=>p.support_type.split("|").map(x=>x.trim())))]
+    .forEach(s=>s&&filterSupport.add(new Option(s,s)));
 }
 
 function render(){
-  const name=filterName.value.toLowerCase();
-  const team=filterTeam.value;
-  const season=filterSeason.value;
-  const support=filterSupport.value;
-
-  document.querySelector("tbody").innerHTML="";
-  document.querySelector(".cards").innerHTML="";
+  tableBody.innerHTML="";
+  cards.innerHTML="";
 
   data.forEach(p=>{
-    const types=p.support_type.split("|").map(s=>s.trim());
-
-    if(name && !p.player_name.toLowerCase().includes(name)) return;
-    if(team!=="All teams" && p.team!==team) return;
-    if(season!=="All seasons" && p.season!==season) return;
-    if(support!=="All support types" && !types.includes(support)) return;
-
-    // TABLE
-    const tr=document.createElement("tr");
-    const tdBadges=document.createElement("td");
-    types.forEach(t=>tdBadges.append(badge(t)));
-    tr.innerHTML=`
-      <td>${p.player_name}</td>
-      <td>${p.team}</td>
-      <td>${p.season}</td>
-      <td></td>
-      <td><a class="button" href="${p.fanatics_url}" target="_blank">Buy jersey</a></td>`;
-    tr.children[3].replaceWith(tdBadges);
-    document.querySelector("tbody").append(tr);
-
-    // CARD
-    const card=document.createElement("div");
-    card.className="card";
-    card.innerHTML=`
-      <div class="card-header">
-        <div>
-          <div class="card-title">${p.player_name}</div>
-          <div class="card-sub">${p.team} · ${p.season}</div>
-        </div>
-        <div class="expand">+</div>
-      </div>
-      <div class="badges"></div>
-      <div class="actions">
-        <a class="button" href="${p.fanatics_url}" target="_blank">Buy jersey</a>
-      </div>
-      <div class="details">
-        ${p.source_url?`<div><strong>Source:</strong> <a href="${p.source_url}" target="_blank">${p.source_type}</a></div>`:""}
-        ${p.verified_date?`<div><strong>Verified:</strong> ${p.verified_date}</div>`:""}
-        ${p.photo_url?`<img src="${p.photo_url}" alt="">`:""}
-        ${p.support_details?`<div>${p.support_details}</div>`:""}
-      </div>`;
-    const bc=card.querySelector(".badges");
-    types.forEach(t=>bc.append(badge(t)));
-    const exp=card.querySelector(".expand");
-    const det=card.querySelector(".details");
-    exp.onclick=()=>{const o=det.style.display==="block";det.style.display=o?"none":"block";exp.textContent=o?"+":"–";};
-    document.querySelector(".cards").append(card);
-  });
-}
-
-filterName.oninput=render;
-filterTeam.onchange=render;
-filterSeason.onchange=render;
-filterSupport.onchange=render;
-
-load();
-</script>
-
-</body>
-</html>
+    if(filterName.value && !p.player_name.toLowerCase().includes(filterName.value.toLowerCase())) return;
+    if(filterTeam.value!=="All teams" && p.team!==filterTeam.value) return;
+    if(filterSeason.value!=="All seasons" && p.season!==filterSeason.value) return;
+    if(filterSupport.value!=="All support types" && !

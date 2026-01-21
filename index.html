@@ -21,7 +21,7 @@ body{
 }
 header{text-align:center;padding:2rem 1rem 1rem}
 main{background:var(--bg);border-radius:24px 24px 0 0;padding:1.5rem;margin-top:1rem}
-.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1rem}
 input,select{padding:.5rem;border-radius:8px;border:none}
 table{width:100%;border-collapse:collapse;display:none}
 th,td{padding:.75rem;border-bottom:1px solid var(--border)}
@@ -49,14 +49,20 @@ th,td{padding:.75rem;border-bottom:1px solid var(--border)}
 
 <div class="filters">
   <input id="filter-name" placeholder="Search player">
-  <select id="filter-team"><option>All teams</option></select>
-  <select id="filter-season"><option>All seasons</option></select>
-  <select id="filter-support"><option>All support types</option></select>
+  <select id="filter-team"><option value="">All teams</option></select>
+  <select id="filter-season"><option value="">All seasons</option></select>
+  <select id="filter-support"><option value="">All support types</option></select>
 </div>
 
 <table>
 <thead>
-<tr><th>Player</th><th>Team</th><th>Season</th><th>Support</th><th></th></tr>
+<tr>
+  <th>Player</th>
+  <th>Team</th>
+  <th>Season</th>
+  <th>Support</th>
+  <th></th>
+</tr>
 </thead>
 <tbody></tbody>
 </table>
@@ -78,7 +84,19 @@ const filterSupport=document.getElementById("filter-support");
 const tableBody=document.querySelector("tbody");
 const cards=document.querySelector(".cards");
 
-let data=[];
+let players=[];
+
+/* SIMPLE CSV PARSER (Google Sheets safe) */
+function parseCSV(text){
+  const lines=text.trim().split("\n");
+  const headers=lines.shift().split(",").map(h=>h.trim());
+  return lines.map(line=>{
+    const values=line.split(",").map(v=>v.trim());
+    const obj={};
+    headers.forEach((h,i)=>obj[h]=values[i]||"");
+    return obj;
+  });
+}
 
 function badge(text){
   const b=document.createElement("span");
@@ -88,45 +106,87 @@ function badge(text){
   return b;
 }
 
-function parseCSV(text){
-  const rows=[], re=/(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|([^\",]+)|)(?:,|\r?\n)/g;
-  let m,row=[];
-  while((m=re.exec(text))){
-    row.push(m[1]?.replace(/\"\"/g,'"')||m[2]||"");
-    if(m[0].endsWith("\n")){rows.push(row);row=[];}
-  }
-  return rows;
-}
-
 async function load(){
   const res=await fetch(CSV_URL);
   const text=await res.text();
-  const rows=parseCSV(text);
-  const headers=rows.shift();
-
-  data=rows.map(r=>{
-    const o={};
-    headers.forEach((h,i)=>o[h.trim()]=r[i]?.trim()||"");
-    return o;
-  });
+  players=parseCSV(text);
 
   populateFilters();
   render();
 }
 
 function populateFilters(){
-  [...new Set(data.map(p=>p.team))].forEach(t=>t&&filterTeam.add(new Option(t,t)));
-  [...new Set(data.map(p=>p.season))].forEach(s=>s&&filterSeason.add(new Option(s,s)));
-  [...new Set(data.flatMap(p=>p.support_type.split("|").map(x=>x.trim())))]
-    .forEach(s=>s&&filterSupport.add(new Option(s,s)));
+  [...new Set(players.map(p=>p.team).filter(Boolean))]
+    .forEach(v=>filterTeam.append(new Option(v,v)));
+
+  [...new Set(players.map(p=>p.season).filter(Boolean))]
+    .forEach(v=>filterSeason.append(new Option(v,v)));
+
+  [...new Set(players.flatMap(p=>(p.support_type||"").split("|").map(s=>s.trim())).filter(Boolean))]
+    .forEach(v=>filterSupport.append(new Option(v,v)));
 }
 
 function render(){
   tableBody.innerHTML="";
   cards.innerHTML="";
 
-  data.forEach(p=>{
+  players.forEach(p=>{
+    const types=(p.support_type||"").split("|").map(s=>s.trim());
+
     if(filterName.value && !p.player_name.toLowerCase().includes(filterName.value.toLowerCase())) return;
-    if(filterTeam.value!=="All teams" && p.team!==filterTeam.value) return;
-    if(filterSeason.value!=="All seasons" && p.season!==filterSeason.value) return;
-    if(filterSupport.value!=="All support types" && !
+    if(filterTeam.value && p.team!==filterTeam.value) return;
+    if(filterSeason.value && p.season!==filterSeason.value) return;
+    if(filterSupport.value && !types.includes(filterSupport.value)) return;
+
+    // TABLE
+    const tr=document.createElement("tr");
+    const tdBadges=document.createElement("td");
+    types.forEach(t=>tdBadges.append(badge(t)));
+    tr.innerHTML=`
+      <td>${p.player_name}</td>
+      <td>${p.team}</td>
+      <td>${p.season}</td>
+      <td></td>
+      <td><a class="button" href="${p.fanatics_url||"#"}" target="_blank">Buy</a></td>
+    `;
+    tr.children[3].replaceWith(tdBadges);
+    tableBody.append(tr);
+
+    // CARD
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`
+      <div class="card-header">
+        <div>
+          <div><strong>${p.player_name}</strong></div>
+          <div class="card-sub">${p.team} · ${p.season}</div>
+        </div>
+        <div class="expand">+</div>
+      </div>
+      <div class="badges"></div>
+      <a class="button" href="${p.fanatics_url||"#"}" target="_blank">Buy jersey</a>
+      <div class="details">${p.support_details||""}</div>
+    `;
+    const bwrap=card.querySelector(".badges");
+    types.forEach(t=>bwrap.append(badge(t)));
+    const details=card.querySelector(".details");
+    const expand=card.querySelector(".expand");
+    expand.onclick=()=>{
+      const open=details.style.display==="block";
+      details.style.display=open?"none":"block";
+      expand.textContent=open?"+":"–";
+    };
+    cards.append(card);
+  });
+}
+
+filterName.oninput=render;
+filterTeam.onchange=render;
+filterSeason.onchange=render;
+filterSupport.onchange=render;
+
+load();
+</script>
+
+</body>
+</html>
